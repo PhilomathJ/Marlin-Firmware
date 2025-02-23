@@ -316,22 +316,22 @@
    * and/or decrease WATCH_TEMP_INCREASE. WATCH_TEMP_INCREASE should not be set
    * below 2.
    */
-  #define WATCH_TEMP_PERIOD  40               // (seconds)
-  #define WATCH_TEMP_INCREASE 2               // (°C)
+  #define WATCH_TEMP_PERIOD  40               // Seconds
+  #define WATCH_TEMP_INCREASE 2               // Degrees Celsius
 #endif
 
 /**
  * Thermal Protection parameters for the bed are just as above for hotends.
  */
 #if ENABLED(THERMAL_PROTECTION_BED)
-  #define THERMAL_PROTECTION_BED_PERIOD        20 // (seconds)
-  #define THERMAL_PROTECTION_BED_HYSTERESIS     2 // (°C)
+  #define THERMAL_PROTECTION_BED_PERIOD        180 // Seconds
+  #define THERMAL_PROTECTION_BED_HYSTERESIS     2 // Degrees Celsius
 
   /**
    * As described above, except for the bed (M140/M190/M303).
    */
-  #define WATCH_BED_TEMP_PERIOD                60 // (seconds)
-  #define WATCH_BED_TEMP_INCREASE               2 // (°C)
+  #define WATCH_BED_TEMP_PERIOD                180 // Seconds
+  #define WATCH_BED_TEMP_INCREASE               2 // Degrees Celsius
 #endif
 
 /**
@@ -577,7 +577,7 @@
  *
  * Define one or both of these to override the default 0-255 range.
  */
-//#define FAN_MIN_PWM 50
+#define FAN_MIN_PWM 50
 //#define FAN_MAX_PWM 128
 
 /**
@@ -1029,7 +1029,7 @@
 //
 // Add the G35 command to read bed corners to help adjust screws. Requires a bed probe.
 //
-//#define ASSISTED_TRAMMING
+#define ASSISTED_TRAMMING
 #if ENABLED(ASSISTED_TRAMMING)
 
   // Define from 3 to 9 points to probe.
@@ -1044,7 +1044,7 @@
   #define RESTORE_LEVELING_AFTER_G35    // Enable to restore leveling setup after operation
   //#define REPORT_TRAMMING_MM          // Report Z deviation (mm) for each point relative to the first
 
-  //#define ASSISTED_TRAMMING_WIZARD    // Add a Tramming Wizard to the LCD menu
+  #define ASSISTED_TRAMMING_WIZARD    // Add a Tramming Wizard to the LCD menu
 
   //#define ASSISTED_TRAMMING_WAIT_POSITION { X_CENTER, Y_CENTER, 30 } // Move the nozzle out of the way for adjustment
 
@@ -1274,7 +1274,7 @@
  * vibration and surface artifacts. The algorithm adapts to provide the best possible step smoothing at the
  * lowest stepping frequencies.
  */
-//#define ADAPTIVE_STEP_SMOOTHING
+#define ADAPTIVE_STEP_SMOOTHING
 
 /**
  * Custom Microstepping
@@ -1360,8 +1360,9 @@
 // Change values more rapidly when the encoder is rotated faster
 #define ENCODER_RATE_MULTIPLIER
 #if ENABLED(ENCODER_RATE_MULTIPLIER)
-  #define ENCODER_10X_STEPS_PER_SEC   30  // (steps/s) Encoder rate for 10x speed
-  #define ENCODER_100X_STEPS_PER_SEC  80  // (steps/s) Encoder rate for 100x speed
+  #define ENCODER_5X_STEPS_PER_SEC   30  // (steps/s) Encoder rate for 10x speed
+  #define ENCODER_10X_STEPS_PER_SEC   80  // (steps/s) Encoder rate for 10x speed
+  #define ENCODER_100X_STEPS_PER_SEC  130  // (steps/s) Encoder rate for 100x speed
 #endif
 
 // Play a beep when the feedrate is changed from the Status Screen
@@ -1377,7 +1378,7 @@
 //#define LCD_BACKLIGHT_TIMEOUT_MINS 1  // (minutes) Timeout before turning off the backlight
 
 #if HAS_BED_PROBE && EITHER(HAS_MARLINUI_MENU, HAS_TFT_LVGL_UI)
-  //#define PROBE_OFFSET_WIZARD       // Add a Probe Z Offset calibration option to the LCD menu
+  #define PROBE_OFFSET_WIZARD       // Add a Probe Z Offset calibration option to the LCD menu
   #if ENABLED(PROBE_OFFSET_WIZARD)
     /**
      * Enable to init the Probe Z-Offset when starting the Wizard.
@@ -1396,10 +1397,7 @@
   #if HAS_BED_PROBE
 
     // Show Deploy / Stow Probe options in the Motion menu.
-    #define PROBE_DEPLOY_STOW_MENU
-
-    // Add calibration in the Probe Offsets menu to compensate for X-axis twist.
-    //#define X_AXIS_TWIST_COMPENSATION
+    #define PROBE_DEPLOY_STOW_MENUmega2560
     #if ENABLED(X_AXIS_TWIST_COMPENSATION)
       /**
        * Enable to init the Probe Z-Offset when starting the Wizard.
@@ -1571,7 +1569,7 @@
    * an option on the LCD screen to continue the print from the last-known
    * point in the file.
    */
-  //#define POWER_LOSS_RECOVERY
+  #define POWER_LOSS_RECOVERY
   #if ENABLED(POWER_LOSS_RECOVERY)
     #define PLR_ENABLED_DEFAULT   false // Power Loss Recovery enabled by default. (Set with 'M413 Sn' & M500)
     //#define BACKUP_POWER_SUPPLY       // Backup power / UPS to move the steppers on power loss
@@ -1617,17 +1615,17 @@
    *  - SDSORT_CACHE_NAMES will retain the sorted file listing in RAM. (Expensive!)
    *  - SDSORT_DYNAMIC_RAM only uses RAM when the SD menu is visible. (Use with caution!)
    */
-  //#define SDCARD_SORT_ALPHA
+  #define SDCARD_SORT_ALPHA
 
   // SD Card Sorting options
   #if ENABLED(SDCARD_SORT_ALPHA)
     #define SDSORT_LIMIT       40     // Maximum number of sorted items (10-256). Costs 27 bytes each.
     #define SDSORT_FOLDERS     -1     // -1=above  0=none  1=below
     #define SDSORT_GCODE       false  // Enable G-code M34 to set sorting behaviors: M34 S<-1|0|1> F<-1|0|1>
-    #define SDSORT_USES_RAM    false  // Pre-allocate a static array for faster pre-sorting.
+    #define SDSORT_USES_RAM    true  // Pre-allocate a static array for faster pre-sorting.
     #define SDSORT_USES_STACK  false  // Prefer the stack for pre-sorting to give back some SRAM. (Negated by next 2 options.)
-    #define SDSORT_CACHE_NAMES false  // Keep sorted items in RAM longer for speedy performance. Most expensive option.
-    #define SDSORT_DYNAMIC_RAM false  // Use dynamic allocation (within SD menus). Least expensive option. Set SDSORT_LIMIT before use!
+    #define SDSORT_CACHE_NAMES true  // Keep sorted items in RAM longer for speedy performance. Most expensive option.
+    #define SDSORT_DYNAMIC_RAM true  // Use dynamic allocation (within SD menus). Least expensive option. Set SDSORT_LIMIT before use!
     #define SDSORT_CACHE_VFATS 2      // Maximum number of 13-byte VFAT entries to use for sorting.
                                       // Note: Only affects SCROLL_LONG_FILENAMES with SDSORT_CACHE_NAMES but not SDSORT_DYNAMIC_RAM.
   #endif
@@ -3207,7 +3205,7 @@
   /**
    * Step on both rising and falling edge signals (as with a square wave).
    */
-  //#define SQUARE_WAVE_STEPPING
+  #define SQUARE_WAVE_STEPPING
 
   /**
    * Enable M122 debugging command for TMC stepper drivers.
