@@ -1,8 +1,8 @@
 ; Heat bed and hot end simultaneously JSF 2/24/2025
 M140 S{material_bed_temperature_layer_0}     ; set bed temperature to e.g. 55 °C and continue
-M104 S{material_print_temperature_layer_0}   ; set hot end temperature to e.g. 210 °C and continue
+M104 E0 S{material_print_temperature_layer_0}   ; set hot end temperature to e.g. 210 °C and continue
 M190 S{material_bed_temperature_layer_0}     ; wait for bed temperature to reach e.g. 55 °C
-M109 S{material_print_temperature_layer_0}   ; wait for hot end temperature to reach e.g. 210 °C
+M109 E0 S{material_print_temperature_layer_0}   ; wait for hot end temperature to reach e.g. 210 °C
 
 ; Ender 3 Custom Start G-code
 G92 E0 ; Reset Extruder
